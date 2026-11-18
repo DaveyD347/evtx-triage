@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evtx-triage"
+dynamic = ["version"]
+description = "Parse Windows Security / Sysmon event logs (EVTX, JSON, CSV) and flag credential theft and lateral movement."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "DaveyD347" }]
+requires-python = ">=3.9"
+dependencies = []
+keywords = ["dfir", "incident-response", "evtx", "sysmon", "threat-hunting", "blue-team", "windows"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+    "Environment :: Console",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.scripts]
+evtx-triage = "evtx_triage.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/DaveyD347/evtx-triage"
+
+[tool.setuptools.dynamic]
+version = { attr = "evtx_triage.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["UP006", "UP007", "UP035", "UP045"]  # keep Optional[] for Python 3.9
